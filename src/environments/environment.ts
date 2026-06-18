@@ -10,7 +10,7 @@ export const environment = {
   supabaseKey: 'sb_publishable__6Ye1i3pO_fmDufIPwxIuA_smXCDuGE',
 
   // Google Gemini
-  geminiApiKey: 'TU_GEMINI_API_KEY',
+  geminiApiKey: '',
 
   // Legacy (no usado)
   openRouterApiKey: ''
