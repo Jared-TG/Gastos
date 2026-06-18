@@ -70,7 +70,14 @@
 
       <div class="lado-derecho">
         <strong>${{ formatoMoneda(gasto.monto) }}</strong>
-        <button class="btn-eliminar" (click)="eliminarGasto(gasto.id)">Eliminar</button>
+        <div class="acciones-gasto">
+          <button class="btn-accion btn-editar" (click)="editarGasto(gasto.id)">
+            <ion-icon name="pencil-outline"></ion-icon>
+          </button>
+          <button class="btn-accion btn-eliminar" (click)="eliminarGasto(gasto.id)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+        </div>
       </div>
     </div>
 

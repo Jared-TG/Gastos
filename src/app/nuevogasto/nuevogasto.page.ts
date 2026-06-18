@@ -57,6 +57,8 @@ export class NuevogastoPage
   // VARIABLES
   // =====================================
 
+  idGastoEdicion: number | null = null;
+
   concepto: string = '';
 
   monto: number | null = null;
@@ -132,6 +134,24 @@ export class NuevogastoPage
         .getCurrentNavigation();
 
     if (
+      navigation?.extras.state &&
+      navigation.extras.state['gastoAEditar']
+    ) {
+      const datosEdicion = navigation.extras.state['gastoAEditar'];
+      
+      this.idGastoEdicion = datosEdicion.id;
+      this.concepto = datosEdicion.concepto || '';
+      this.monto = Number(datosEdicion.monto) || null;
+      this.fecha = datosEdicion.fecha_gasto || this.fecha;
+      this.categoria = datosEdicion.categoria || 'Sin categoría';
+      
+      if (datosEdicion.metodo_pago_id === 1) this.metodoPago = 'Efectivo';
+      else if (datosEdicion.metodo_pago_id === 2) this.metodoPago = 'Tarjeta';
+      else if (datosEdicion.metodo_pago_id === 3) this.metodoPago = 'Transferencia';
+      
+      this.notas = datosEdicion.notas || '';
+    }
+    else if (
 
       navigation?.extras.state
 
@@ -247,31 +267,30 @@ export class NuevogastoPage
         concepto: this.concepto,
         monto: Number(this.monto),
         categoria_id: categoria_id,
-        fecha_gasto: this.fecha,
         metodo_pago_id: metodo_pago_id,
+        fecha_gasto: this.fecha,
         notas: this.notas,
-        imagen_ticket_url: this.imagenGasto === 'assets/imagenes/gasto.jpg' ? null : this.imagenGasto
       };
 
-      console.log(
-        'GASTO A GUARDAR:',
-        gasto
-      );
 
       // =====================================
       // SUPABASE
       // =====================================
 
-      const resultado =
-        await this
-          .supabaseServicio
-          .guardarGasto(gasto);
+      let resultadoOk = false;
+
+      if (this.idGastoEdicion) {
+        resultadoOk = await this.supabaseServicio.actualizarGasto(this.idGastoEdicion, gasto);
+      } else {
+        const insertado = await this.supabaseServicio.guardarGasto(gasto);
+        if (insertado) resultadoOk = true;
+      }
 
       // =====================================
       // ERROR
       // =====================================
 
-      if (!resultado) {
+      if (!resultadoOk) {
 
         throw new Error(
           'No se pudo guardar'
