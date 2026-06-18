@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonContent, IonHeader, IonIcon, IonInput, IonModal, IonDatetime, IonFooter, IonItem, IonLabel, IonButton, IonSelectOption } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonIcon, IonInput, IonModal, IonDatetime, IonFooter, IonItem, IonLabel, IonButton, IonSelectOption, IonSelect, IonTextarea } from '@ionic/angular/standalone';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { addIcons } from 'ionicons';
@@ -34,8 +34,10 @@ import { SupabaseServicio } from '../servicios/supabase.servicio';
     IonItem,
     IonLabel,
     IonButton,
-    IonSelectOption
-]
+    IonSelectOption,
+    IonSelect,
+    IonTextarea
+  ]
 })
 
 export class NuevogastoPage
