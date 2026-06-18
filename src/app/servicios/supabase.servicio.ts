@@ -113,6 +113,24 @@ export class SupabaseServicio {
   }
 
   // =====================================
+  // ACTUALIZAR GASTO
+  // =====================================
+
+  async actualizarGasto(id: number, gasto: any): Promise<boolean> {
+    const { error } = await this.supabase
+      .from('gastos')
+      .update(gasto)
+      .eq('id', id);
+
+    if (error) {
+      console.error('Error al actualizar gasto:', error);
+      return false;
+    }
+
+    return true;
+  }
+
+  // =====================================
   // ELIMINAR GASTO
   // =====================================
 

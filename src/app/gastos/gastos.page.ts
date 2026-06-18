@@ -16,7 +16,9 @@ import {
   wifiOutline,
   medicalOutline,
   carOutline,
-  cafeOutline
+  cafeOutline,
+  pencilOutline,
+  trashOutline
 } from 'ionicons/icons';
 
 // Importamos individualmente los componentes de Ionic para que no truene la app
@@ -86,7 +88,9 @@ export class GastosPage {
       wifiOutline,
       medicalOutline,
       carOutline,
-      cafeOutline
+      cafeOutline,
+      pencilOutline,
+      trashOutline
     });
   }
 
@@ -210,6 +214,18 @@ export class GastosPage {
     const eliminado = await this.supabaseServicio.eliminarGasto(id);
     if (eliminado) {
       await this.cargarGastos();
+    }
+  }
+
+  // =====================================
+  // EDITAR GASTO
+  // =====================================
+  editarGasto(id: number) {
+    const gasto = this.gastos.find(g => g.id === id);
+    if (gasto) {
+      this.router.navigate(['/nuevogasto'], {
+        state: { gastoAEditar: gasto }
+      });
     }
   }
 
