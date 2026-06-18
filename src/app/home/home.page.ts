@@ -2,7 +2,13 @@ import { Component } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
-import { IonicModule } from '@ionic/angular';
+import {
+  IonContent,
+  IonIcon,
+  IonFab,
+  IonFabButton,
+  IonFooter
+} from '@ionic/angular/standalone';
 
 import { RouterModule } from '@angular/router';
 
@@ -43,11 +49,13 @@ import {
   standalone: true,
 
   imports: [
-
-    IonicModule,
+    IonContent,
+    IonIcon,
+    IonFab,
+    IonFabButton,
+    IonFooter,
     CommonModule,
     RouterModule
-
   ],
 
 })
@@ -122,9 +130,21 @@ export class HomePage {
       // GASTOS RECIENTES
       // =====================================
 
-      this.gastosRecientes =
-        await this.supabaseServicio
-        .obtenerGastosRecientes();
+      const datosHome = await this.supabaseServicio.obtenerGastosRecientes();
+      this.gastosRecientes = datosHome.map((g: any) => {
+        let catNombre = 'Otros';
+        if (g.categoria_id === 1) catNombre = 'Comida';
+        else if (g.categoria_id === 2) catNombre = 'Transporte';
+        else if (g.categoria_id === 3) catNombre = 'Servicios';
+        else if (g.categoria_id === 4) catNombre = 'Entretenimiento';
+        
+        return {
+          ...g,
+          fecha: g.fecha_gasto, 
+          categoria: catNombre,
+          concepto: g.concepto 
+        };
+      });
 
       // =====================================
       // TOTAL DEL MES

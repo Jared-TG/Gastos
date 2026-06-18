@@ -233,39 +233,24 @@ export class NuevogastoPage
       // DATOS
       // =====================================
 
+      let categoria_id = 5;
+      if (this.categoria === 'Comida') categoria_id = 1;
+      else if (this.categoria === 'Transporte') categoria_id = 2;
+      else if (this.categoria === 'Servicios') categoria_id = 3;
+      else if (this.categoria === 'Entretenimiento') categoria_id = 4;
+
+      let metodo_pago_id = 1;
+      if (this.metodoPago === 'Tarjeta') metodo_pago_id = 2;
+      else if (this.metodoPago === 'Transferencia') metodo_pago_id = 3;
+
       const gasto = {
-
-        concepto:
-          this.concepto,
-
-        monto:
-          Number(this.monto),
-
-        categoria:
-          this.categoria,
-
-        fecha:
-          this.fecha,
-
-        metodo_pago:
-          this.metodoPago,
-
-        notas:
-          this.notas,
-
-        imagen:
-
-          this.imagenGasto ===
-            'assets/imagenes/gasto.jpg'
-
-            ?
-
-            null
-
-            :
-
-            this.imagenGasto
-
+        concepto: this.concepto,
+        monto: Number(this.monto),
+        categoria_id: categoria_id,
+        fecha_gasto: this.fecha,
+        metodo_pago_id: metodo_pago_id,
+        notas: this.notas,
+        imagen_ticket_url: this.imagenGasto === 'assets/imagenes/gasto.jpg' ? null : this.imagenGasto
       };
 
       console.log(

@@ -136,7 +136,7 @@ implements OnInit {
       .supabase
       .from('gastos')
       .select('*')
-      .order('created_at', {
+      .order('fecha_creacion', {
         ascending: false
       });
 
@@ -148,7 +148,17 @@ implements OnInit {
 
       }
 
-      this.gastos = data || [];
+      this.gastos = (data || []).map((g: any) => {
+        let catNombre = 'Otros';
+        if (g.categoria_id === 1) catNombre = 'Comida';
+        else if (g.categoria_id === 2) catNombre = 'Transporte';
+        else if (g.categoria_id === 3) catNombre = 'Servicios';
+        else if (g.categoria_id === 4) catNombre = 'Entretenimiento';
+        return {
+          ...g,
+          categoria: catNombre
+        };
+      });
 
       this.calcularResumen();
 
