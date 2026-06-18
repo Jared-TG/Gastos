@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+  IonContent,
+  IonIcon,
+  IonFooter,
+  IonSpinner
+} from '@ionic/angular/standalone';
 import { Router, RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
 import {
@@ -20,7 +25,7 @@ import {
   CameraSource
 } from '@capacitor/camera';
 import { SupabaseServicio } from '../servicios/supabase.servicio';
-import { IAService } from '../servicios/IAservice.service';
+import { IAService } from '../servicios/ia.service';
 
 @Component({
   selector: 'app-escanear',
@@ -28,7 +33,10 @@ import { IAService } from '../servicios/IAservice.service';
   styleUrls: ['./escanear.page.scss'],
   standalone: true,
   imports: [
-    IonicModule,
+    IonContent,
+    IonIcon,
+    IonFooter,
+    IonSpinner,
     CommonModule,
     RouterModule,
     FormsModule
@@ -213,10 +221,14 @@ export class EscanearPage {
       const { data, error } = await this.supabaseServicio.supabase
         .from('gastos')
         .insert({
-          negocio: this.negocio,
-          fecha: this.fecha,
-          productos: this.productos,
-          monto: parseFloat(this.total) || 0 // Aseguramos insertar tipo numérico si se ocupa en Supabase
+          concepto: 'Ticket Escaneado',
+          establecimiento: this.negocio,
+          fecha_gasto: this.fecha,
+          notas: JSON.stringify(this.productos),
+          monto: parseFloat(this.total) || 0,
+          categoria_id: 5,
+          metodo_pago_id: 1,
+          procesado_por_ia: true
         })
         .select();
 

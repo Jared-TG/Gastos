@@ -103,7 +103,20 @@ export class GastosPage {
   async cargarGastos() {
     this.cargando = true;
     try {
-      this.gastos = await this.supabaseServicio.obtenerGastos();
+      const datosBD = await this.supabaseServicio.obtenerGastos();
+      this.gastos = datosBD.map((g: any) => {
+        let catNombre = 'Otros';
+        if (g.categoria_id === 1) catNombre = 'Comida';
+        else if (g.categoria_id === 2) catNombre = 'Transporte';
+        else if (g.categoria_id === 3) catNombre = 'Servicios';
+        else if (g.categoria_id === 4) catNombre = 'Entretenimiento';
+        
+        return {
+          ...g,
+          fecha: g.fecha_gasto, 
+          categoria: catNombre 
+        };
+      });
       this.calcularLimitesFechas();
       this.aplicarFiltrosCombinados();
     } catch(error) {
