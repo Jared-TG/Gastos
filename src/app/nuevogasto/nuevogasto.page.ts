@@ -1,22 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-
 import { CommonModule } from '@angular/common';
-
-import { IonicModule } from '@ionic/angular';
-
-import {
-
-  Router,
-  RouterModule
-
-} from '@angular/router';
-
+import { IonContent, IonHeader, IonIcon, IonInput, IonModal, IonDatetime, IonFooter, IonItem, IonLabel, IonButton, IonSelectOption, IonSelect, IonTextarea } from '@ionic/angular/standalone';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-
 import { addIcons } from 'ionicons';
-
 import {
-
   arrowBackOutline,
   personCircleOutline,
   homeOutline,
@@ -24,30 +12,32 @@ import {
   scanOutline,
   barChartOutline,
   qrCodeOutline
-
 } from 'ionicons/icons';
-
 import { SupabaseServicio } from '../servicios/supabase.servicio';
 
 @Component({
-
   selector: 'app-nuevogasto',
-
   templateUrl: './nuevogasto.page.html',
-
   styleUrls: ['./nuevogasto.page.scss'],
-
   standalone: true,
-
   imports: [
-
     CommonModule,
-    IonicModule,
     RouterModule,
-    FormsModule
-
+    FormsModule,
+    IonContent,
+    IonHeader,
+    IonIcon,
+    IonInput,
+    IonModal,
+    IonDatetime,
+    IonFooter,
+    IonItem,
+    IonLabel,
+    IonButton,
+    IonSelectOption,
+    IonSelect,
+    IonTextarea
   ]
-
 })
 
 export class NuevogastoPage
@@ -81,7 +71,7 @@ export class NuevogastoPage
   notas: string = '';
 
   imagenGasto: string =
-    'assets/imagenes/gasto.jpg';
+    'assets/imagenes/imagenescan.png';
 
   cargando: boolean = false;
 
