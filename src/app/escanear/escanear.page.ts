@@ -186,8 +186,13 @@ export class EscanearPage {
         this.productos
       );
 
-      // 3. GUARDAR EN TU BASE DE DATOS SUPABASE
-      await this.guardarEnSupabase();
+      // =====================================
+      // 3. FORMATEAR NOTAS
+      // =====================================
+      const notasFormateadas = this.productos.map(p => {
+        if (typeof p === 'string') return `- ${p}`;
+        return `- ${p.nombre || 'Producto'}: $${p.precio || 0}`;
+      }).join('\n');
 
       // 4. REDIRECCIÓN ENVIANDO TODOS LOS DATOS RECOLECTADOS HACIA NUEVO GASTO
       this.router.navigate(['/nuevogasto'], {
@@ -197,7 +202,7 @@ export class EscanearPage {
             concepto: this.negocio,
             fecha: this.fecha,
             productos: this.productos,
-            notas: JSON.stringify(this.productos, null, 2),
+            notas: notasFormateadas,
             total: this.total,
             monto: parseFloat(this.total) || 0,
             imagen: this.imagenTicket // Enviamos la imagen capturada por si se necesita renderizar allá
